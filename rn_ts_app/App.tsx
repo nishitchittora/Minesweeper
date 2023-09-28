@@ -7,7 +7,7 @@ export default function App() {
 	return (
 		<View style={styles.container}>
 			<Text>Helloasdasd</Text>
-			<Grid n={10} m={10} />
+			<Grid n={2} m={2} bombs={2} />
 		</View>
 	);
 }

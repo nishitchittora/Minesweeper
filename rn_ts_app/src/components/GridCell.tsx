@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { GridCellAttributesType } from "../types";
 
-export default function GridCell() {
+export default function GridCell(data: GridCellAttributesType) {
 	return (
 		<TouchableOpacity
 			style={{ flex: 1, backgroundColor: "blue" }}
