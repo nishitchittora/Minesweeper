@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "app",
-    "slug": "app",
+    "name": "rn_ts_app",
+    "slug": "rn_ts_app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
