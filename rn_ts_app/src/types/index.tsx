@@ -8,4 +8,5 @@ export interface GridType {
 	n: number;
 	m: number;
 	bombs: number;
+	timeInSec: number;
 }

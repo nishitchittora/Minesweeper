@@ -4,10 +4,10 @@ import { StyleSheet, Text, View } from "react-native";
 import { GridCellAttributesType, GridType } from "../types";
 import GridCell from "./GridCell";
 
-const Grid: FC<GridType> = ({ n, m, bombs }) => {
-	const randomNumber = () => {
-		return Math.floor(Math.random() * n * m);
-	};
+const Grid: FC<GridType> = ({ n, m, bombs, timeInSec }) => {
+	const [failed, setFail] = useState<boolean>(false);
+	const [isFinished, setIsFinished] = useState<boolean>(false);
+	const [seconds, setSeconds] = useState(0);
 	const [gridCellAttributes, setGridCellAttributes] = useState<
 		GridCellAttributesType[]
 	>([
@@ -17,6 +17,31 @@ const Grid: FC<GridType> = ({ n, m, bombs }) => {
 			near_by_bombs: 0,
 		})),
 	]);
+	const randomNumber = () => {
+		return Math.floor(Math.random() * n * m);
+	};
+	const getTime = () => {
+		if (seconds > 0) setSeconds(Math.floor((seconds - 1) % 60));
+		else {
+			setIsFinished(true);
+		}
+	};
+
+	useEffect(() => {
+		if (isFinished)
+			if (failed) {
+				console.log("You failed");
+			} else {
+				console.log("You Won");
+			}
+	}, [isFinished]);
+
+	useEffect(() => {
+		setSeconds(Math.floor(timeInSec % 60));
+		const interval = setInterval(() => getTime(), 1000);
+		return () => clearInterval(interval);
+	}, []);
+
 	useEffect(() => {
 		let place_bombs = bombs;
 		if (bombs > n * m) {
@@ -93,6 +118,28 @@ const Grid: FC<GridType> = ({ n, m, bombs }) => {
 
 		setGridCellAttributes(tmp_data);
 	});
+
+	useEffect(() => {
+		if (failed) setIsFinished(true);
+	}, [failed]);
+
+	const setVisibility = (i: number) => {
+		let tmpData = gridCellAttributes;
+		tmpData[i].visibility = true;
+		if (tmpData[i].is_bomb) {
+			setFail(true);
+		} else if (!tmpData[i].near_by_bombs) {
+			let max_show_random_space = Math.random() * n;
+			let changeVisibility: number[] = [i];
+			while (max_show_random_space && changeVisibility.length) {}
+		}
+		setGridCellAttributes(tmpData);
+	};
+
+	const returnEmptySpace = (i: number) => {
+		gridCellAttributes;
+		return [];
+	};
 
 	return (
 		<View>
